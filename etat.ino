@@ -1,12 +1,11 @@
 #include <Servo.h>
 Servo monServo;
-
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 #define MAX_NUM_TRIES 3
 
-int PositionDuServo = 0;
+int PositionDuServo = 15;
 const byte pinButton1 = 6;
 const byte pinButton2 = 13;
 const byte pinButton3 = 8;
@@ -42,9 +41,9 @@ void setup()
 {
   Serial.begin(9600);
   lcd.begin(16, 2);
-  pinMode(pinButton1, INPUT_PULLUP);
-  pinMode(pinButton2, INPUT_PULLUP);
-  pinMode(pinButton3, INPUT_PULLUP);
+  pinMode(pinButton1, INPUT);
+  pinMode(pinButton2, INPUT);
+  pinMode(pinButton3, INPUT);
   pinMode(pinLampe, OUTPUT);
   monServo.attach(10);
   monServo.write(PositionDuServo);
@@ -129,6 +128,7 @@ void loop()
       {
         lcd.setCursor(1, 2);
         lcd.print("WINNER");
+        Serial.println("WINNER");
         digitalWrite(pinLampe, HIGH);
         turn_counter =3;
       }
@@ -136,7 +136,8 @@ void loop()
         if (turn_counter >= MAX_NUM_TRIES){
           lcd.setCursor(1, 2);
           lcd.print("GAME OVER");
-          digitalWrite(pinLampe, HIGH);
+          Serial.println("GAME OVER");
+          
         }
       }
     }
